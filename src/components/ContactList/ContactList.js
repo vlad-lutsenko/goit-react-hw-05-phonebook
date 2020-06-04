@@ -27,7 +27,7 @@ const ContactList = ({
   }, [contactList, saveToStorage]);
 
   const list = !query.length ? contactList : filteredList;
-  console.log(contactList);
+
   return (
     <>
       <CSSTransition
