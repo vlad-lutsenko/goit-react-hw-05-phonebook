@@ -1,8 +1,9 @@
 import React, { useEffect } from "react";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
-import styles from "./ContactList.module.css";
+import PropTypes from "prop-types";
 import popIn from "../../utils/transitions/pop.module.css";
 import slideIn from "../../utils/transitions/slide.module.css";
+import styles from "./ContactList.module.css";
 
 const ContactList = ({
   contactList,
@@ -19,15 +20,14 @@ const ContactList = ({
 
   useEffect(() => {
     setContactList(getFromStorage("contacts"));
-    console.log("component did mount");
   }, [setContactList, getFromStorage]);
 
   useEffect(() => {
     saveToStorage("contacts", contactList);
-    console.log("contacts updated");
   }, [contactList, saveToStorage]);
 
   const list = !query.length ? contactList : filteredList;
+  console.log(contactList);
   return (
     <>
       <CSSTransition
@@ -55,6 +55,33 @@ const ContactList = ({
       </TransitionGroup>
     </>
   );
+};
+
+ContactList.propTypes = {
+  contactList: PropTypes.oneOfType([
+    PropTypes.arrayOf(
+      PropTypes.exact({
+        id: PropTypes.string.isRequired,
+        name: PropTypes.string.isRequired,
+        number: PropTypes.string.isRequired,
+      })
+    ),
+    PropTypes.array,
+  ]).isRequired,
+  filteredList: PropTypes.oneOfType([
+    PropTypes.arrayOf(
+      PropTypes.exact({
+        id: PropTypes.string.isRequired,
+        name: PropTypes.string.isRequired,
+        number: PropTypes.string.isRequired,
+      })
+    ),
+    PropTypes.array,
+  ]).isRequired,
+  setContactList: PropTypes.func.isRequired,
+  saveToStorage: PropTypes.func.isRequired,
+  getFromStorage: PropTypes.func.isRequired,
+  query: PropTypes.string,
 };
 
 export default ContactList;

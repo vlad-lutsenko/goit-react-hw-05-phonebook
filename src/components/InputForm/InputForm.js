@@ -1,9 +1,10 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
 import { v4 as uuidv4 } from "uuid";
-import styles from "./InputForm.module.css";
-
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
+import styles from "./InputForm.module.css";
 
 const InputForm = ({ contactList, setContactList }) => {
   const [name, setName] = useState("");
@@ -73,6 +74,20 @@ const InputForm = ({ contactList, setContactList }) => {
       </button>
     </form>
   );
+};
+
+InputForm.propTypes = {
+  contactList: PropTypes.oneOfType([
+    PropTypes.arrayOf(
+      PropTypes.exact({
+        id: PropTypes.string.isRequired,
+        name: PropTypes.string.isRequired,
+        number: PropTypes.string.isRequired,
+      })
+    ),
+    PropTypes.array,
+  ]).isRequired,
+  setContactList: PropTypes.func.isRequired,
 };
 
 export default InputForm;
