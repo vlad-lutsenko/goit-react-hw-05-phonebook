@@ -17,15 +17,15 @@ const ContactList = ({
     setContactList([...updatedList]);
   };
 
-  const contactsFromLS = getFromStorage("contacts");
-
   useEffect(() => {
-    setContactList(contactsFromLS);
-  }, []);
+    setContactList(getFromStorage("contacts"));
+    console.log("component did mount");
+  }, [setContactList, getFromStorage]);
 
   useEffect(() => {
     saveToStorage("contacts", contactList);
-  }, [contactList]);
+    console.log("contacts updated");
+  }, [contactList, saveToStorage]);
 
   const list = !query.length ? contactList : filteredList;
   return (
