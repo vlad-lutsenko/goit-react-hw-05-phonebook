@@ -13,31 +13,19 @@ function App() {
       <Storage>
         {({ saveToStorage, getFromStorage }) => (
           <ContactListSetter>
-            {({
-              contactList,
-              setContactList,
-              filteredList,
-              setFilteredList,
-              query,
-              setQuery,
-            }) => (
+            {({ contactList, setContactList, query, setQuery }) => (
               <>
                 <InputForm
                   contactList={contactList}
                   setContactList={setContactList}
                   saveToStorage={saveToStorage}
                 />
-                <ContactsFilter
-                  contactList={contactList}
-                  setFilteredList={setFilteredList}
-                  setQuery={setQuery}
-                />
+                <ContactsFilter contactList={contactList} setQuery={setQuery} />
                 <ContactList
                   contactList={contactList}
                   setContactList={setContactList}
                   saveToStorage={saveToStorage}
                   getFromStorage={getFromStorage}
-                  filteredList={filteredList}
                   query={query}
                 />
               </>

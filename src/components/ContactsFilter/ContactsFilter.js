@@ -4,16 +4,11 @@ import PropTypes from "prop-types";
 import styles from "./ContactsFilter.module.css";
 import slideIn from "../../utils/transitions/slide.module.css";
 
-const ContactsFilter = ({ contactList, setFilteredList, setQuery }) => {
+const ContactsFilter = ({ contactList, setQuery }) => {
   const inputChangeHandler = (e) => {
     const { value } = e.target;
-    const filteredList = contactList.filter(
-      (contact) =>
-        contact.name.toLowerCase().includes(value.toLowerCase()) ||
-        contact.number.includes(value)
-    );
+
     setQuery(value);
-    setFilteredList(filteredList);
   };
 
   return (
@@ -47,7 +42,6 @@ ContactsFilter.propTypes = {
     ),
     PropTypes.array,
   ]).isRequired,
-  setFilteredList: PropTypes.func.isRequired,
   setQuery: PropTypes.func.isRequired,
 };
 

@@ -10,13 +10,18 @@ const ContactList = ({
   setContactList,
   saveToStorage,
   getFromStorage,
-  filteredList,
   query,
 }) => {
   const onDelete = (id) => {
     const updatedList = contactList.filter((contact) => contact.id !== id);
     setContactList([...updatedList]);
   };
+
+  const filteredList = contactList.filter(
+    (contact) =>
+      contact.name.toLowerCase().includes(query.toLowerCase()) ||
+      contact.number.includes(query)
+  );
 
   useEffect(() => {
     setContactList(getFromStorage("contacts"));
@@ -25,8 +30,6 @@ const ContactList = ({
   useEffect(() => {
     saveToStorage("contacts", contactList);
   }, [contactList, saveToStorage]);
-
-  const list = !query.length ? contactList : filteredList;
 
   return (
     <>
@@ -41,7 +44,7 @@ const ContactList = ({
       </CSSTransition>
 
       <TransitionGroup component="ul" className={styles.contactList}>
-        {list.map((contact) => (
+        {filteredList.map((contact) => (
           <CSSTransition key={contact.id} classNames={popIn} timeout={250}>
             <li className={styles.contactListItem}>
               <span className={styles.name}>{contact.name}</span>
@@ -59,16 +62,6 @@ const ContactList = ({
 
 ContactList.propTypes = {
   contactList: PropTypes.oneOfType([
-    PropTypes.arrayOf(
-      PropTypes.exact({
-        id: PropTypes.string.isRequired,
-        name: PropTypes.string.isRequired,
-        number: PropTypes.string.isRequired,
-      })
-    ),
-    PropTypes.array,
-  ]).isRequired,
-  filteredList: PropTypes.oneOfType([
     PropTypes.arrayOf(
       PropTypes.exact({
         id: PropTypes.string.isRequired,
