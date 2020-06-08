@@ -8,9 +8,9 @@ import styles from "./ContactList.module.css";
 const ContactList = ({
   contactList,
   setContactList,
+  query,
   saveToStorage,
   getFromStorage,
-  query,
 }) => {
   const onDelete = (id) => {
     const updatedList = contactList.filter((contact) => contact.id !== id);
@@ -19,8 +19,8 @@ const ContactList = ({
 
   const filteredList = contactList.filter(
     (contact) =>
-      contact.name.toLowerCase().includes(query.toLowerCase()) ||
-      contact.number.includes(query)
+      contact.name.toLowerCase().includes(query.toLowerCase().trim()) ||
+      contact.number.includes(query.trim())
   );
 
   useEffect(() => {

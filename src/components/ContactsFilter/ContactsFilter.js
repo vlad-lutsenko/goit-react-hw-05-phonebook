@@ -7,7 +7,6 @@ import slideIn from "../../utils/transitions/slide.module.css";
 const ContactsFilter = ({ contactList, setQuery }) => {
   const inputChangeHandler = (e) => {
     const { value } = e.target;
-
     setQuery(value);
   };
 
